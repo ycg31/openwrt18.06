@@ -11,9 +11,9 @@ name: OpenWrt18.06-CI
 on:
   release:
     types: published
-  push:
-    branches:
-      - master
+#  push:
+#    branches:
+#      - master
 #    paths:
 #      - '.config'
 #  schedule:
@@ -26,7 +26,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    if: github.event.repository.owner.id == github.event.sender.id
+    
     steps:
 
       - name: Checkout
@@ -299,14 +300,4 @@ jobs:
       - name: Upload firmware
         uses: actions/upload-artifact@master
         with:
-          name: OpenWrt18.06 firmware
-          path: ./bin/targets/
-          
-      - name: Upload  IPK
-        uses: actions/upload-artifact@master
-        with:
-          name: OpenWrt18.06 x86 IPK
-          path: ./bin/packages/
-          
-     
-
+          name: OpenWrt18.06
