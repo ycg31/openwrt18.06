@@ -300,4 +300,11 @@ jobs:
       - name: Upload firmware
         uses: actions/upload-artifact@master
         with:
-          name: OpenWrt18.06
+          name: OpenWrt18.06 firmware
+          path: ./bin/targets/
+          
+      - name: Upload  IPK
+        uses: actions/upload-artifact@master
+        with:
+          name: OpenWrt18.06 x86 IPK
+          path: ./bin/packages/
