@@ -255,7 +255,7 @@ jobs:
           #  CONFIG_PACKAGE_luci-theme-Butterfly=y
             CONFIG_PACKAGE_luci-theme-Butterfly-dark=y
             CONFIG_PACKAGE_luci-theme-opentomcat=y
-         #   CONFIG_PACKAGE_luci-theme-opentomato=y
+          # CONFIG_PACKAGE_luci-theme-opentomato=y
             CONFIG_PACKAGE_luci-theme-argon-mod=y
            EOF
           # 常用软件包:
