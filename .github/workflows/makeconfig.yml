@@ -281,6 +281,7 @@ jobs:
 
       - name: 拷贝文件
         run: |
+           mkdir -p ./myconfig
            cp ./.config ./myconfig/my.config
              
       - name: Upload config
