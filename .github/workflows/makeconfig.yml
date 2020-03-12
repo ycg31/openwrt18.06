@@ -283,5 +283,5 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: Config
-          path: ./.config
+          path: ./
           
