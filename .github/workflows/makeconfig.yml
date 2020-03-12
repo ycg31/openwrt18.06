@@ -14,8 +14,8 @@ on:
   push:
 #    branches:
 #      - master
-     paths:
-       - '.config'
+#     paths:
+#       - '.config'
 #  schedule:
 #    - cron: 0 8 * * 5
 #  watch:
@@ -98,7 +98,7 @@ jobs:
       - name: Generate configuration file
         run: |
           rm -f ./.config*
-          touch ./.config
+          touch ./myconfig/.config
           #
           # ========================固件定制部分=======================
           # 
@@ -276,12 +276,12 @@ jobs:
           # 
           # ========================固件定制部分结束========================
           # 
-          sed -i 's/^[ \t]*//g' ./.config
+          sed -i 's/^[ \t]*//g' ./myconfig.config
           make defconfig
 
       - name: Upload config
         uses: actions/upload-artifact@master
         with:
           name: Config
-          path: ./
+          path: ./myconfig
           
