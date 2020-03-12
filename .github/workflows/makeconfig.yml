@@ -18,8 +18,8 @@ on:
 #       - '.config'
 #  schedule:
 #    - cron: 0 8 * * 5
-#  watch:
-#    types: started
+  watch:
+    types: started
 
 jobs:
 
@@ -98,7 +98,7 @@ jobs:
       - name: Generate configuration file
         run: |
           rm -f ./.config*
-          touch ./myconfig/.config
+          touch ./.config
           #
           # ========================固件定制部分=======================
           # 
@@ -276,9 +276,13 @@ jobs:
           # 
           # ========================固件定制部分结束========================
           # 
-          sed -i 's/^[ \t]*//g' ./myconfig.config
+          sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
+      - name: 拷贝文件
+        run: |
+           cp ./.config ./myconfig/my.config
+             
       - name: Upload config
         uses: actions/upload-artifact@master
         with:
