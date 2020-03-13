@@ -256,7 +256,7 @@ jobs:
             CONFIG_PACKAGE_luci-app-ssr-plus-lean_INCLUDE_GoQuiet-client=y
             CONFIG_PACKAGE_luci-app-ssr-plus-lean_INCLUDE_GoQuiet-server=y
             CONFIG_PACKAGE_luci-app-ssr-plus-lean_INCLUDE_v2ray-plugin=y
-            CONFIG_PACKAGE_luci-app-ssr-plus-lean_INCLUDE_redsocks2=y
+          # CONFIG_PACKAGE_luci-app-ssr-plus-lean_INCLUDE_redsocks2=y
             CONFIG_PACKAGE_luci-app-advanced-reboot=y
           # CONFIG_PACKAGE_luci-app-amule=y
             CONFIG_PACKAGE_luci-app-oaf=y
