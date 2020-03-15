@@ -134,9 +134,9 @@ jobs:
            CONFIG_TARGET_x86_64_Generic=y
            EOF
           # 固件压缩:
-            cat >> .config <<EOF
-            CONFIG_TARGET_IMAGES_GZIP=y
-            EOF
+          #  cat >> .config <<EOF
+          #  CONFIG_TARGET_IMAGES_GZIP=y
+          #  EOF
           # 编译UEFI固件:
             cat >> .config <<EOF
             CONFIG_EFI_IMAGES=y
@@ -289,7 +289,7 @@ jobs:
             CONFIG_PACKAGE_luci-app-ssr-libev-server=y
           # CONFIG_PACKAGE_luci-app-ssr-python-pro-server=y
           # CONFIG_PACKAGE_luci-app-transmission=y
-          # CONFIG_PACKAGE_luci-app-wifischedule=y
+          # CONFIG_PACKAGE_luci-app-wifischedule is not set
             CONFIG_LUCI_LANG_redsocks2=y
             CONFIG_LUCI_LANG_en=y
             CONFIG_LUCI_LANG_zh-tw=y
@@ -314,8 +314,8 @@ jobs:
            EOF
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
            cat >> .config <<EOF
-          # CONFIG_TARGET_IMAGES_PAD=y
-          # CONFIG_VMDK_IMAGES=y
+          # CONFIG_TARGET_IMAGES_PAD is not set
+          # CONFIG_VMDK_IMAGES is not set
           EOF
           # 
           # ========================固件定制部分结束========================
