@@ -46,8 +46,8 @@ jobs:
 
     - name: Load upstream commits
       run: |
-        git checkout -b Ameykyl-master master
-        git pull https://github.com/Ameykyl/openwrt18.06.git master
+        git checkout -b Ameykyl-master
+        git pull https://github.com/Ameykyl/openwrt18.06.git
 
     - name: Push Commits
       run: |
