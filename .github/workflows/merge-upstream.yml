@@ -45,12 +45,10 @@ jobs:
         git config --global user.name "ycg31"
 
     - name: Load upstream commits
-      run: |
-        git checkout -b Ameykyl-master
-        git pull https://github.com/Ameykyl/openwrt18.06.git
+      run:  git remote add upstream https://github.com/Ameykyl/openwrt18.06.git
 
     - name: Push Commits
       run: |
         git checkout master
-        git merge --no-ff Ameykyl-master
+        git merge upstream/master
         git push origin master
