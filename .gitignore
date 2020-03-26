@@ -1,4 +1,4 @@
-/.github/workflows/*.yml
+*.yml
 *.o
 .DS_Store
 .*.swp
