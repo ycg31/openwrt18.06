@@ -130,7 +130,8 @@ kpr_update_rules() {
 		echo_date " ---------------------------------------------------------------------------------------"  >>$LOGFILE
 		# wget --no-check-certificate --timeout=8 -qO - $url_easylist > /tmp/easylistchina.txt
 		for i in {1..5}; do
-			wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/easylistchina.txt $url_easylist
+			wget --no-check-certificate --timeout=8 -qO - $url_easylist > /tmp/easylistchina.txt
+			#wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/easylistchina.txt $url_easylist
 			easylistchina_rule_nu_local=`grep -E -v "^!" /tmp/easylistchina.txt | wc -l`
 			if [[ "$easylistchina_rule_nu_local" -gt 5000 ]]; then
 				break
@@ -140,7 +141,8 @@ kpr_update_rules() {
 			fi
 		done
 		for i in {1..5}; do
-			wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/cjx-annoyance.txt $url_cjx
+			wget --no-check-certificate --timeout=8 -qO - $url_cjx > /tmp/cjx-annoyance.txt
+			#wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/cjx-annoyance.txt $url_cjx
 			cjx_rule_nu_local=`grep -E -v "^!" /tmp/cjx-annoyance.txt | wc -l`
 			if [[ "$cjx_rule_nu_local" -gt 500 ]]; then
 				break
@@ -192,8 +194,10 @@ kpr_update_rules() {
 	if [[ "1" == "1" ]]; then
 		echo_date " ---------------------------------------------------------------------------------------" >>$LOGFILE
 		for i in {1..5}; do
-			wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/yhosts.txt $url_yhosts
-			wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/tvbox.txt $url_yhosts1
+			wget --no-check-certificate --timeout=8 -qO - $url_yhosts > /tmp/yhosts.txt
+			wget --no-check-certificate --timeout=8 -qO - $url_yhosts1 > /tmp/tvbox.txt
+			#wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/yhosts.txt $url_yhosts
+			#wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/tvbox.txt $url_yhosts1
 			cat /tmp/tvbox.txt >> /tmp/yhosts.txt
 			replenish_rules_local=`cat $KSROOT/koolproxy/data/rules/yhosts.txt  | sed -n '2p' | cut -d "=" -f2`
 			replenish_rules_remote=`cat /tmp/yhosts.txt | sed -n '2p' | cut -d "=" -f2`
@@ -222,14 +226,16 @@ kpr_update_rules() {
 		echo_date " ---------------------------------------------------------------------------------------" >>$LOGFILE
 		for i in {1..5}; do
 			kpr_video_md5=`md5sum $KSROOT/koolproxy/data/rules/kp.dat | awk '{print $1}'`
-			wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/kp.dat.md5 $url_kp_md5
+			wget --no-check-certificate --timeout=8 -qO - $url_kp_md5 > /tmp/kp.dat.md5
+			#wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/kp.dat.md5 $url_kp_md5
 			kpr_video_new_md5=`cat /tmp/kp.dat.md5 | sed -n '1p'`
 			echo_date 远程视频规则md5：$kpr_video_new_md5 >>$LOGFILE
 			echo_date 您本地视频规则md5：$kpr_video_md5 >>$LOGFILE
 
 			if [[ "$kpr_video_md5" != "$kpr_video_new_md5" ]]; then
 				echo_date 检测到新版视频规则.开始更新.......... >>$LOGFILE
-				wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/kp.dat $url_kp
+				wget --no-check-certificate --timeout=8 -qO - $url_kp > /tmp/kp.dat
+				#wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/kp.dat $url_kp
 				kpr_video_download_md5=`md5sum /tmp/kp.dat | awk '{print $1}'`
 				echo_date 您下载的视频规则md5：$kpr_video_download_md5 >>$LOGFILE
 				if [[ "$kpr_video_download_md5" == "$kpr_video_new_md5" ]]; then
@@ -252,8 +258,8 @@ kpr_update_rules() {
 	if [[ "1" == "1" ]]; then
 		echo_date " ---------------------------------------------------------------------------------------" >>$LOGFILE
 		for i in {1..5}; do
-			wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/fanboy.txt $url_fanboy
-			# wget --no-check-certificate --timeout=8 -qO - $url_fanboy > /tmp/fanboy.txt
+			#wget -4 -a /tmp/upload/kpr_log.txt -O /tmp/fanboy.txt $url_fanboy
+			wget --no-check-certificate --timeout=8 -qO - $url_fanboy > /tmp/fanboy.txt
 			fanboy_rules_local=`cat $KSROOT/koolproxy/data/rules/fanboy.txt  | sed -n '3p'|awk '{print $3,$4}'`
 			fanboy_rules_remote=`cat /tmp/fanboy.txt  | sed -n '3p'|awk '{print $3,$4}'`
 			fanboy_nu_local=`grep -E -v "^!" /tmp/fanboy.txt | wc -l`
@@ -285,83 +291,83 @@ kpr_update_rules() {
 		echo_date 正在优化 fanboy规则。。。。。 >>$LOGFILE
 		# 删除导致KP崩溃的规则
 		# 听说高手?都打的很多、这样才能体现技术
-		sed -i '/^\$/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/\*\$/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/^\$/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/\*\$/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 给三大视频网站放行 由kp.dat负责
-		sed -i '/youku.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/iqiyi.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/qq.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/g.alicdn.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/tudou.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/gtimg.cn/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/youku.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/iqiyi.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/qq.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/g.alicdn.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/tudou.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/gtimg.cn/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 给知乎放行
-		sed -i '/zhihu.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/zhihu.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 
 
 		# 将规则转化成kp能识别的https
-		cat $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt | grep "^||" | sed 's#^||#||https://#g' >> $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		cat $KSROOT/koolproxy/data/rules/fanboy.txt | grep "^||" | sed 's#^||#||https://#g' >> $KSROOT/koolproxy/data/rules/fanboy_https.txt
 		# 移出https不支持规则domain=
-		sed -i 's/\(,domain=\).*//g' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i 's/\(\$domain=\).*//g' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i 's/\(domain=\).*//g' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i '/\^$/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i '/\^\*\.gif/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i '/\^\*\.jpg/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i 's/\(,domain=\).*//g' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i 's/\(\$domain=\).*//g' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i 's/\(domain=\).*//g' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i '/\^$/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i '/\^\*\.gif/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i '/\^\*\.jpg/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 
-		cat $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt | grep "^||" | sed 's#^||#||http://#g' >> $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		cat $KSROOT/koolproxy/data/rules/fanboy.txt | grep "^||" | sed 's#^||#||http://#g' >> $KSROOT/koolproxy/data/rules/fanboy_https.txt
 
-		cat $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt | grep -i '^[0-9a-z]'| grep -v '^http'| sed 's#^#https://#g' >> $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		cat $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt | grep -i '^[0-9a-z]'| grep -v '^http'| sed 's#^#http://#g' >> $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		cat $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt | grep -i '^[0-9a-z]'| grep -i '^http' >> $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		cat $KSROOT/koolproxy/data/rules/fanboy.txt | grep -i '^[0-9a-z]'| grep -v '^http'| sed 's#^#https://#g' >> $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		cat $KSROOT/koolproxy/data/rules/fanboy.txt | grep -i '^[0-9a-z]'| grep -v '^http'| sed 's#^#http://#g' >> $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		cat $KSROOT/koolproxy/data/rules/fanboy.txt | grep -i '^[0-9a-z]'| grep -i '^http' >> $KSROOT/koolproxy/data/rules/fanboy_https.txt
 
 
 		# 给github放行
-		sed -i '/github/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i '/github/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 		# 给api.twitter.com的https放行
-		sed -i '/twitter.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i '/twitter.com/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 		# 给facebook.com的https放行
-		sed -i '/facebook.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i '/fbcdn.net/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i '/facebook.com/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i '/fbcdn.net/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 		# 给 instagram.com 放行
-		sed -i '/instagram.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i '/instagram.com/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 		# 给 twitch.tv 放行
-		sed -i '/twitch.tv/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i '/twitch.tv/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 		# 删除可能导致卡顿的HTTPS规则
-		sed -i '/\.\*\//d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i '/\.\*\//d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 		# 给国内三大电商平台放行
-		sed -i '/jd.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i '/taobao.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
-		sed -i '/tmall.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt
+		sed -i '/jd.com/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i '/taobao.com/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
+		sed -i '/tmall.com/d' $KSROOT/koolproxy/data/rules/fanboy_https.txt
 
 		# 删除不必要信息重新打包 15 表示从第15行开始 $表示结束
-		sed -i '15,$d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '15,$d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 合二归一
-		cat $KSROOT/koolproxy/data/rules/fanboy-annoyance_https.txt >> $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		cat $KSROOT/koolproxy/data/rules/fanboy_https.txt >> $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 删除可能导致kpr卡死的神奇规则
-		sed -i '/https:\/\/\*/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/https:\/\/\*/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 给 netflix.com 放行
-		sed -i '/netflix.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/netflix.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 给 tvbs.com 放行
-		sed -i '/tvbs.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/googletagmanager.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/tvbs.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/googletagmanager.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 给 microsoft.com 放行
-		sed -i '/microsoft.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/microsoft.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 给apple的https放行
-		sed -i '/apple.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
-		sed -i '/mzstatic.com/d' $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+		sed -i '/apple.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
+		sed -i '/mzstatic.com/d' $KSROOT/koolproxy/data/rules/fanboy.txt
 		# 终极 https 卡顿优化 grep -n 显示行号  awk -F 分割数据  sed -i "${del_rule}d" 需要""" 和{}引用变量
 		# 当 koolproxyR_del_rule 是1的时候就一直循环，除非 del_rule 变量为空了。
 		koolproxyR_del_rule=1
 		while [ $koolproxyR_del_rule = 1 ];do
-			del_rule=`cat $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt | grep -n 'https://' | grep '\*' | grep -v '/\*'| grep -v '\^\*' | grep -v '\*\=' | grep -v '\$s\@' | grep -v '\$r\@'| awk -F":" '{print $1}' | sed -n '1p'`
+			del_rule=`cat $KSROOT/koolproxy/data/rules/fanboy.txt | grep -n 'https://' | grep '\*' | grep -v '/\*'| grep -v '\^\*' | grep -v '\*\=' | grep -v '\$s\@' | grep -v '\$r\@'| awk -F":" '{print $1}' | sed -n '1p'`
 			if [[ "$del_rule" != "" ]]; then
-				sed -i "${del_rule}d" $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt
+				sed -i "${del_rule}d" $KSROOT/koolproxy/data/rules/fanboy.txt
 			else
 				koolproxyR_del_rule=0
 			fi
 		done	
 
-        cp $KSROOT/koolproxy/data/rules/fanboy-annoyance.txt $KSROOT/koolproxy/data/rules/fanboy.txt
+        cp $KSROOT/koolproxy/data/rules/fanboy.txt $KSROOT/koolproxy/data/rules/fanboy.txt
 	else
 		echo_date 跳过优化 fanboy规则。。。。。 >>$LOGFILE
 	fi
