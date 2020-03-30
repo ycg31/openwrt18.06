@@ -546,12 +546,18 @@ kpr_update_rules() {
 
 	echo_date 所有规则更新并优化完毕！ >>$LOGFILE
 	echo_date ======================================================================================================= >>$LOGFILE
-        easylist_rules_local=`cat /usr/share/koolproxy/data/rules/easylistchina.txt  | sed -n '3p'|awk '{print $3,$4}'`
+        wget 'https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/daily.txt' -q -O $KP_DIR/data/rules/daily.txt
+		wget 'https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/koolproxy.txt' -q -O $KP_DIR/data/rules/koolproxy.txt
+		wget 'https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf' -q -O $KP_DIR/data/rules/AdGuardHome.txt
+	    wget 'https://raw.githubusercontent.com/user1121114685/koolproxyR/master/koolproxyR/koolproxyR/data/koolproxyR_ipset.conf' -q -O $KP_DIR/koolproxy_ipset.conf
+		easylist_rules_local=`cat /usr/share/koolproxy/data/rules/easylistchina.txt  | sed -n '3p'|awk '{print $3,$4}'`
         fanboy_rules_local=`cat /usr/share/koolproxy/data/rules/fanboy.txt  | sed -n '3p'|awk '{print $3,$4}'`
         replenish_rules_local=`cat /usr/share/koolproxy/data/rules/yhosts.txt | sed -n '2p' | cut -d "=" -f2`
+		AdGuardHome_rules_local=`cat /usr/share/koolproxy/data/rules/easylistchina.txt  | sed -n '3p'|awk '{print $3,$4}'`
         echo $(date "+%F %T"): -------------------easylist version $easylist_rules_local >>$LOGFILE
         echo $(date "+%F %T"): -------------------fanboy   version $fanboy_rules_local >>$LOGFILE
         echo $(date "+%F %T"): -------------------yhosts   version $replenish_rules_local >>$LOGFILE
+		echo $(date "+%F %T"): -------------------AdGuardHome   version $AdGuardHome_rules_local >>$LOGFILE
 
 	echo $(date "+%F %T"): ------------------- 内置规则更新成功！ ------------------- >>$LOGFILE
 
@@ -562,6 +568,33 @@ update_rss_rules() {
 	cp $KP_DIR/data/user.txt $KP_DIR/data/rules/user.txt
 	config_load $CONFIG
 	config_foreach __update_rule rss_rule
+}
+
+
+
+
+	
+update_rules() {
+	echo $(date "+%F %T"): ------------------- 内置规则更新 ------------------- >>$LOGFILE
+		wget 'https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat' -q -O $KP_DIR/data/rules/kp.dat
+		wget 'https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/daily.txt' -q -O $KP_DIR/data/rules/daily.txt
+		wget 'https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/koolproxy.txt' -q -O $KP_DIR/data/rules/koolproxy.txt
+		wget 'https://raw.githubusercontent.com/user1121114685/koolproxyR/master/koolproxyR/koolproxyR/data/rules/yhosts.txt' -q -O $KP_DIR/data/rules/yhosts.txt
+		wget 'https://raw.githubusercontent.com/user1121114685/koolproxyR/master/koolproxyR/koolproxyR/data/rules/fanboy-annoyance.txt' -q -O $KP_DIR/data/rules/fanboy.txt
+		wget 'https://raw.githubusercontent.com/user1121114685/koolproxyR/master/koolproxyR/koolproxyR/data/rules/easylistchina.txt' -q -O $KP_DIR/data/rules/easylistchina.txt
+		wget 'https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf' -q -O $KP_DIR/data/rules/AdGuardHome.txt
+	    wget 'https://raw.githubusercontent.com/user1121114685/koolproxyR/master/koolproxyR/koolproxyR/data/koolproxyR_ipset.conf' -q -O $KP_DIR/koolproxy_ipset.conf
+        easylist_rules_local=`cat /usr/share/koolproxy/data/rules/easylistchina.txt  | sed -n '3p'|awk '{print $3,$4}'`
+        fanboy_rules_local=`cat /usr/share/koolproxy/data/rules/fanboy.txt  | sed -n '3p'|awk '{print $3,$4}'`
+		AdGuardHome_rules_local=`cat /usr/share/koolproxy/data/rules/easylistchina.txt  | sed -n '3p'|awk '{print $3,$4}'`
+        replenish_rules_local=`cat /usr/share/koolproxy/data/rules/yhosts.txt | sed -n '2p' | cut -d "=" -f2`
+        echo $(date "+%F %T"): -------------------easylist version $easylist_rules_local >>$LOGFILE
+        echo $(date "+%F %T"): -------------------fanboy   version $fanboy_rules_local >>$LOGFILE
+        echo $(date "+%F %T"): -------------------yhosts   version $replenish_rules_local >>$LOGFILE
+		echo $(date "+%F %T"): -------------------AdGuardHome   version $AdGuardHome_rules_local >>$LOGFILE
+	    echo $(date "+%F %T"): ------------------- 内置规则更新成功！ ------------------- >>$LOGFILE
+        RESTART_KOOLPROXY=true
+
 }
 
 
@@ -577,7 +610,7 @@ init_env
 limit_log $LOGFILE
 
 #update_kpr_rules
-kpr_update_rules
+update_rules
 
 
 # update user rules
