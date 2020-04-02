@@ -28,8 +28,8 @@ jobs:
 
       - name: upload to gitee 传到码云
         run: |
-          git config --global user.name "ycg31"
           git config --global user.email "ycg31@qq.com"
+          git config --global user.name "ycg31"
           git clone --depth 1 https://ycg31:${GITEE_TOKEN}@gitee.com/ycg31/openwrt_firmware.git rom
           mkdir -p rom/Lean/
           rm -rf rom/Lean/
