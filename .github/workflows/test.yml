@@ -1,4 +1,4 @@
- name: MyTest
+name: MyTest
 on:
   release:
     types: published
