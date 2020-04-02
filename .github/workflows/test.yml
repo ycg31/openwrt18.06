@@ -32,7 +32,6 @@ jobs:
           git config --global user.name "ycg31"
           git clone --depth 1 https://ycg31:${{ secrets.GITEE_TOKEN }}@gitee.com/ycg31/openwrt_firmware.git rom
           mkdir -p rom/Lean/
-          rm -rf rom/Lean/
           cp -rf ./Config.in rom/Lean/
           cd rom
           git add . || echo "1"
