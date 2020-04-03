@@ -1,0 +1,39 @@
+name: MyTest
+on:
+  release:
+    types: published
+  push:
+#    branches:
+#      - master
+    paths:
+      - '.github/workflows/test.yml'
+#  schedule:
+#    - cron: 0 8 * * 5
+  watch:
+    types: started
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - name: upload to gitee 传到码云
+        run: |
+          git config --global user.email "ycg31@qq.com"
+          git config --global user.name "ycg31"
+          git clone --depth 1 https://ycg31:${{ secrets.GITEE_TOKEN }}@gitee.com/ycg31/openwrt_firmware.git rom
+          mkdir -p rom/Lean/
+          cp -rf ./Config.in rom/Lean/
+          cd rom
+          git add . || echo "1"
+          git commit -m "github_actions" -a;
+          git push || (sleep 30m && git push) || (sleep 30m && git push)
