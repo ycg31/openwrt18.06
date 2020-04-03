@@ -69,29 +69,22 @@ ADVANCED:
 2 koolproxy启动后会检测二进制文件更新，如果有更新，会替换./koolproxy，并且由父进程重启koolproxy，以后每20分钟检测一次更新
 3 现在不支持规则订阅了，只能识别kp.dat, koolproxy.txt, user.txt,daily.txt，需要自定义规则的可以修改user.txt
 
-# 二进制下载固定地址
-https://koolproxy.com/downloads/i386
-https://koolproxy.com/downloads/x86_64
-https://koolproxy.com/downloads/arm
-https://koolproxy.com/downloads/mips
-https://koolproxy.com/downloads/mipsel
 
 # 规则下载固定地址
-https://kprule.com/koolproxy.txt
-https://kprule.com/daily.txt
-https://kprule.com/kp.dat
-https://kprule.com/user.txt
+url_cjx="https://shaoxia1991.coding.net/p/cjxlist/d/cjxlist/git/raw/master/cjx-annoyance.txt"
+url_kp="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat"
+url_kp_md5="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat.md5"
+url_easylist="https://easylist-downloads.adblockplus.org/easylistchina.txt"
+url_yhosts="https://shaoxia1991.coding.net/p/yhosts/d/yhosts/git/raw/master/hosts"
+url_yhosts1="https://shaoxia1991.coding.net/p/yhosts/d/yhosts/git/raw/master/data/tvbox.txt"
+kpr_our_rule="https://shaoxia1991.coding.net/p/koolproxyR_rule_list/d/koolproxyR_rule_list/git/raw/master/kpr_our_rule.txt"
+url_fanboy="https://secure.fanboy.co.nz/fanboy-annoyance.txt"
 
 # 规则下载对应的CDN地址
 https://kprules.b0.upaiyun.com/koolproxy.txt
 https://kprules.b0.upaiyun.com/daily.txt
 https://kprules.b0.upaiyun.com/kp.dat
 https://kprules.b0.upaiyun.com/user.txt
-
-# 二进制文件和规则 github备份地址：
-二进制：https://github.com/koolproxy/koolproxy-bin (已作废)
-规则：https://github.com/koolproxy/koolproxy_rules (已作废)
-
 
 1 建议从上面的链接获取最新的二进制和基本的规则文件，然后按照上面的目录结构来部署
 2 如果不需要https过滤，只需要一个koolproxy程序就足够了，data文件夹和rules文件夹都会自己创建。 

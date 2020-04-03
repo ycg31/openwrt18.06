@@ -610,7 +610,7 @@ init_env
 limit_log $LOGFILE
 
 #update_kpr_rules
-update_rules
+kpr_update_rules
 
 
 # update user rules

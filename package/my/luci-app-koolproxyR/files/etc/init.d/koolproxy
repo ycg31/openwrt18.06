@@ -238,11 +238,8 @@ load_rules() {
 			easylistchina.txt)
 				sed -i '9s/0/1/g' $KP_DIR/data/source.list
 			;;
-			chengfeng.txt)
-				sed -i '10s/0/1/g' $KP_DIR/data/source.list
-			;;
 			fanboy.txt)
-				sed -i '11s/0/1/g' $KP_DIR/data/source.list
+				sed -i '10s/0/1/g' $KP_DIR/data/source.list
 			;;
 		esac
 	done
@@ -409,7 +406,7 @@ pre_start() {
 	[ "$koolproxy_mode" == "2" ] && echo_date 选择【IPSET过滤模式】
 	if [ "$koolproxy_mode" == "3" ]; then
 		echo_date 选择【视频过滤模式】
-		sed -i '1s/1/0/g;2s/1/0/g' $KP_DIR/data/source.list
+		sed -i '1s/1/0/g;7s/1/0/g' $KP_DIR/data/source.list
 	fi
 	return 1
 }
