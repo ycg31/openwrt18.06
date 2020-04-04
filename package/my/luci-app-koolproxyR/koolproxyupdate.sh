@@ -6,7 +6,7 @@ wget 'https://easylist-downloads.adblockplus.org/easylistchina.txt' -O files/usr
 wget 'https://shaoxia1991.coding.net/p/koolproxyR_rule_list/d/koolproxyR_rule_list/git/raw/master/kpr_our_rule.txt' -O files/usr/share/koolproxy/data/rules/kpr_our_rule.txt
 wget 'https://raw.githubusercontent.com/user1121114685/koolproxyR/master/koolproxyR/koolproxyR/data/rules/user.txt' -O files/usr/share/koolproxy/data/user.txt
 cp files/usr/share/koolproxy/data/user.txt files/usr/share/koolproxy/data/rules/user.txt
-wget 'https://raw.githubusercontent.com/user1121114685/koolproxyR/master/koolproxyR/koolproxyR/data/koolproxyR_ipset.conf' -O files/usr/share/koolproxy/koolproxy_ipset.conf
+wget 'https://raw.githubusercontent.com/brokeld/KoolProxyR/master/koolproxy_ipset.conf' -O files/usr/share/koolproxy/koolproxy_ipset.conf
 
 wget https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt -O- | grep ^\|\|[^\*]*\^$ | sed -e 's:||:address\=\/:' -e 's:\^:/0\.0\.0\.0:' > files/usr/share/koolproxy/dnsmasq.adblock
 sed -i '/youku/d' files/usr/share/koolproxy/dnsmasq.adblock

@@ -632,3 +632,4 @@ if [ $RESTART_KOOLPROXY ]; then
 fi
 
 init_env
+
