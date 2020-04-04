@@ -40,23 +40,23 @@ t.description = translate(string.format("%s<br /><br />", status))
 
 t:tab("base",translate("Basic Settings"))
 
-e = t:taboption("base", Flag, "enabled", translate("Enable"))
+e = t:taboption("base", Flag, "enabled", translate("启用"))
 e.default = 0
 e.rmempty = false
 
 e = t:taboption("base", DummyValue, "koolproxy_status", translate("程序版本"))
 e.value = string.format("[ %s ]", v)
 
-e = t:taboption("base", Value, "startup_delay", translate("Startup Delay"))
-e:value(0, translate("Not enabled"))
+e = t:taboption("base", Value, "startup_delay", translate("启动延迟"))
+e:value(0, translate("关闭"))
 for _, v in ipairs({5, 10, 15, 25, 40}) do
-	e:value(v, translate("%u seconds") %{v})
+	e:value(v, translate("%u 秒") %{v})
 end
 e.datatype = "uinteger"
 e.default = 0
 e.rmempty = false
 
-e = t:taboption("base", ListValue, "koolproxy_mode", translate("Filter Mode"))
+e = t:taboption("base", ListValue, "koolproxy_mode", translate("过滤模式"))
 e.default = 1
 e.rmempty = false
 e:value(1, translate("全局模式"))
@@ -110,6 +110,7 @@ e = t:taboption("base", ListValue, "time_update", translate("定时更新"))
 for t = 0,23 do
 	e:value(t,translate("每天"..t.."点"))
 end
+e:value(0, translate("关闭"))
 e.default = 0
 e.rmempty = false
 e.description = translate(string.format("<font color=\"red\"><strong>定时更新订阅规则与Adblock Plus Hosts</strong></font>"))
