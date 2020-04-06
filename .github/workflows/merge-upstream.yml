@@ -49,4 +49,9 @@ jobs:
       run : rm -rfv .github/workflows/*
       
     - name: Push Commits
-      run: git push origin master
+      run : |
+       git config --global user.email "ycg31@qq.com"
+       git config --global user.name "ycg31"
+       git add . || echo "1"
+       git commit -m "github_actions" -a;
+       git push "https://ycg31:$GITHUB_TOKEN@github.com/ycg31/openwrt18.06.git" master
