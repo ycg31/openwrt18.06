@@ -5,7 +5,7 @@ PKG_VERSION:=6
 PKG_RELEASE:=3
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/holmium/dnsforwarder.git
+PKG_SOURCE_URL:=https://github.com/1715173329/dnsforwarder.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=587e61ae4d75dc976f538088b715a3c8ee26c144
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-6
@@ -19,7 +19,7 @@ define Package/dnsforwarder
   SECTION:=net
   CATEGORY:=Network
   TITLE:=A simple DNS forwarder
-  URL:=https://github.com/holmium/dnsforwarder
+  URL:=https://github.com/1715173329/dnsforwarder
   DEPENDS:=+wget +ipset +dnsmasq-full +libpthread +coreutils-base64
 endef
 
